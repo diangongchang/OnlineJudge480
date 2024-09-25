@@ -223,6 +223,39 @@ console.log(add(1, 2))
     }
 }
 
+_vb_lang_config = {
+    "template": """//PREPEND BEGIN
+Module Program
+//PREPEND END
+
+//TEMPLATE BEGIN
+    Function Add(a As Integer, b As Integer) As Integer
+        ' code
+    End Function
+//TEMPLATE END
+
+//APPEND BEGIN
+    Sub Main()
+        Console.WriteLine(Add(1, 2))
+    End Sub
+End Module
+//APPEND END""",
+    "compile": {
+        "src_name": "Program.vb",
+        "exe_name": "Program.dll",
+        "max_cpu_time": 5000,
+        "max_real_time": 10000,
+        "max_memory": 512 * 1024 * 1024,
+        "compile_command": "/usr/bin/dotnet build -o {exe_dir} {src_path}"
+    },
+    "run": {
+        "command": "/usr/bin/dotnet {exe_path}/Program.dll",
+        "seccomp_rule": None,
+        "env": default_env,
+        "memory_limit_check_only": 1
+    }
+}
+
 languages = [
     {"config": _c_lang_config, "name": "C", "description": "GCC 13", "content_type": "text/x-csrc",
       "spj": {"compile": _c_lang_spj_compile, "config": _c_lang_spj_config}},
@@ -232,4 +265,5 @@ languages = [
     {"config": _py3_lang_config, "name": "Python3", "description": "Python 3.12", "content_type": "text/x-python"},
     {"config": _go_lang_config, "name": "Golang", "description": "Golang 1.22", "content_type": "text/x-go"},
     {"config": _node_lang_config, "name": "JavaScript", "description": "Node.js 20", "content_type": "text/javascript"},
+    {"config": _vb_lang_config,"name": "Visual Basic","description": ".NET 6.0","content_type": "text/x-vb"},
 ]
